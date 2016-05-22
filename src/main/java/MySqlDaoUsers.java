@@ -116,6 +116,7 @@ public class MySqlDaoUsers extends AbstractJDBSDao implements UsersDAO {
         while (set.next()) {
             User user = new User();
             user.setID(set.getInt("ID"));
+
             user.setName(set.getString("Name"));
             user.setSurname(set.getString("Surname"));
             user.setRating(set.getFloat("Rating"));
