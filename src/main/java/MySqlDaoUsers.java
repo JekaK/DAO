@@ -17,24 +17,24 @@ public class MySqlDaoUsers extends AbstractJDBSDao implements UsersDAO {
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO mydb.users (Name,Surname,Email,Password,Rating,Status,Country) VALUES (?,?,?,?,?,?,?);";
+        return "INSERT INTO mydb.users (Name,Surname,Email,Password,Rating,Status,Country,BooksID) VALUES (?,?,?,?,?,?,?,?);";
     }
 
     @Override
     public String getReadQuery() {
-        return "SELECT * FROM mydb.users WHERE id = ?;";
+        return "SELECT * FROM mydb.users WHERE ID = ?;";
     }
 
     @Override
     public String getUpdateQuery() {
         return "UPDATE mydb.users\n" +
-                "SET Name=?,Surname=?,Email=?,Password=?,Rating=?,Status=?,Country=?\n" +
+                "SET Name=?,Surname=?,Email=?,Password=?,Rating=?,Status=?,Country=?,BooksID=?\n" +
                 "WHERE ID=?;";
     }
 
     @Override
     public String getDeleteQuery() {
-        return "DELETE FROM mydb.users WHERE Name=? AND Surname=? AND Email=? AND Password=? AND Rating=? AND Status=? AND Country=?";
+        return "DELETE FROM mydb.users WHERE Name = ? AND Surname=? AND Email=? AND Password=? AND Rating=? AND Status=? AND Country=? AND BooksID=?;";
     }
 
     @Override
@@ -50,6 +50,7 @@ public class MySqlDaoUsers extends AbstractJDBSDao implements UsersDAO {
             preparedStatement.setFloat(5, user.getRating());
             preparedStatement.setInt(6, user.getStatus());
             preparedStatement.setString(7, user.getCountry());
+            preparedStatement.setString(8, user.getBooksID());
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,6 +78,7 @@ public class MySqlDaoUsers extends AbstractJDBSDao implements UsersDAO {
         user.setCountry(set.getString("Country"));
         user.setEmail(set.getString("Email"));
         user.setPassword(set.getString("Password"));
+        user.setBooksID(set.getString("BooksID"));
         return user;
     }
 
@@ -84,6 +86,7 @@ public class MySqlDaoUsers extends AbstractJDBSDao implements UsersDAO {
     public boolean update(User user) {
         String sql = getUpdateQuery();
         try {
+           /* sql = "DELETE  FROM  mydb.users WHERE  ID = ?";*/
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, user.getName());
             statement.setString(2, user.getSurname());
@@ -92,7 +95,9 @@ public class MySqlDaoUsers extends AbstractJDBSDao implements UsersDAO {
             statement.setFloat(5, user.getRating());
             statement.setInt(6, user.getStatus());
             statement.setString(7, user.getCountry());
-            statement.setInt(8,user.getID());
+            statement.setString(8, user.getBooksID());
+            statement.setInt(9, user.getID());
+
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -102,8 +107,18 @@ public class MySqlDaoUsers extends AbstractJDBSDao implements UsersDAO {
     }
 
     @Override
-    public void delete(User user) {
-
+    public void delete(User user) throws SQLException {
+        String sql = getDeleteQuery();
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, user.getName());
+        statement.setString(2, user.getSurname());
+        statement.setString(3, user.getEmail());
+        statement.setString(4, user.getPassword());
+        statement.setFloat(5, user.getRating());
+        statement.setInt(6, user.getStatus());
+        statement.setString(7, user.getCountry());
+        statement.setString(8, user.getBooksID());
+        statement.execute();
     }
 
     @Override
@@ -116,7 +131,6 @@ public class MySqlDaoUsers extends AbstractJDBSDao implements UsersDAO {
         while (set.next()) {
             User user = new User();
             user.setID(set.getInt("ID"));
-
             user.setName(set.getString("Name"));
             user.setSurname(set.getString("Surname"));
             user.setRating(set.getFloat("Rating"));
@@ -124,6 +138,7 @@ public class MySqlDaoUsers extends AbstractJDBSDao implements UsersDAO {
             user.setCountry(set.getString("Country"));
             user.setEmail(set.getString("Email"));
             user.setPassword(set.getString("Password"));
+            user.setBooksID(set.getString("BooksID"));
             users.add(user);
         }
         return users;

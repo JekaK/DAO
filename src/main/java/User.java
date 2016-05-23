@@ -10,6 +10,7 @@ public class User {
     private Float Rating;
     private Integer Status;
     private String Country;
+    private String BooksID = null;
 
     public Integer getID() {
         return ID;
@@ -43,6 +44,10 @@ public class User {
         return Status;
     }
 
+    public String getBooksID() {
+        return BooksID;
+    }
+
     public void setID(Integer ID) {
         this.ID = ID;
     }
@@ -73,5 +78,9 @@ public class User {
 
     public void setCountry(String country) {
         Country = country;
+    }
+
+    public void setBooksID(String booksID) {
+        BooksID = booksID;
     }
 }

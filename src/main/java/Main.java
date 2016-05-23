@@ -16,7 +16,7 @@ public class Main {
         MySqlDaoFactory factory = new MySqlDaoFactory();
         MySqlDaoUsers users = new MySqlDaoUsers(factory.getConnection());
 
-        User user = users.read(1);
-        System.out.println(user.getCountry());
+        User user = users.read(11);
+        users.delete(user);
     }
 }

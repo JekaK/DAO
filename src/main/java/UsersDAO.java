@@ -8,6 +8,6 @@ public interface UsersDAO {
     public boolean create(User user) throws SQLException;
     public User read(int key) throws SQLException;
     public boolean update(User user);
-    public void delete(User user);
+    public void delete(User user) throws SQLException;
     public List<User> getAll() throws SQLException;
 }
