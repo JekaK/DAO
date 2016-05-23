@@ -12,6 +12,6 @@ In the non specific context of the Java programming language, Data Access Object
 Potential disadvantages of using DAO include leaky abstraction,[citation needed] code duplication,[2] and abstraction inversion. In particular, the abstraction of the DAO as a regular Java object can hide the high cost of each database access, and can also force developers to trigger multiple database queries to retrieve information that could otherwise be returned in a single operation with normal SQL set operations. Time consumption is moderate.
 
 
-## Active Record sample on RubyOnMine - https://github.com/sun1x/active-record
+## Active Record implementation in Ruby - https://github.com/sun1x/active-record
 
 
